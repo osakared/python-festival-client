@@ -117,16 +117,17 @@ class FestivalClient(object):
 
         return scheme_responses, audio_responses
 
+if __name__ == "__main__":
 
-parser = argparse.ArgumentParser()
-parser.description = 'A client for festival_server written in Python'
-parser.add_argument('-a', '--address', help='Address to bind to', default='localhost')
-parser.add_argument('-p', '--port', help='Port to listen on', type=int, default=1314) # same default port as festival_server
-configuration = parser.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.description = 'A client for festival_server written in Python'
+    parser.add_argument('-a', '--address', help='Address to bind to', default='localhost')
+    parser.add_argument('-p', '--port', help='Port to listen on', type=int, default=1314) # same default port as festival_server
+    configuration = parser.parse_args()
 
-festival_client = FestivalClient(configuration.address, configuration.port)
-# If we can't connect, just spit out error and abort
-if not festival_client.connect(): sys.exit(1)
+    festival_client = FestivalClient(configuration.address, configuration.port)
+    # If we can't connect, just spit out error and abort
+    if not festival_client.connect(): sys.exit(1)
 
-# Startup console to forward commands to festival_server and show responses
-festival_command.FestivalCommand(festival_client).cmdloop()
+    # Startup console to forward commands to festival_server and show responses
+    festival_command.FestivalCommand(festival_client).cmdloop()
