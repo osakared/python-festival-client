@@ -33,10 +33,11 @@
 import argparse
 import socket
 import sys
-import festival_command
+from . import festival_command
 
 newline_bytes = b'\n'
 ok_bytes = b'OK\n'
+festival_key = b'ft_StUfF_key'
 
 class FestivalClient(object):
     """Represents a socket connection to a festival_server"""
@@ -108,10 +109,10 @@ class FestivalClient(object):
             data_dump, _, current_response = current_response.partition(ok_bytes)
             if state == 'get_scheme':
                 current_scheme_responses = data_dump.split(newline_bytes)
-                current_scheme_responses.remove(b'ft_StUfF_key')
+                current_scheme_responses.remove(festival_key)
                 scheme_responses += current_scheme_responses
             elif state == 'get_wav':
-                audio_responses.append(data_dump)
+                audio_responses.append(data_dump.replace(festival_key, b''))
             break
             # state = 'get_type'
 
