@@ -83,7 +83,7 @@ class FestivalClient(object):
         if not self.socket: return
 
         # Send message
-        self.socket.sendall(bytes(message, 'UTF-8'))
+        self.socket.sendall(bytes(message, 'ISO-8859-1'))
 
         # Always get response
         scheme_responses = []
