@@ -110,7 +110,7 @@ class FestivalClient(object):
             if state == 'get_scheme':
                 current_scheme_responses = data_dump.split(newline_bytes)
                 current_scheme_responses.remove(festival_key)
-                scheme_responses += current_scheme_responses
+                scheme_responses += [response.decode('ISO-8859-1') for response in current_scheme_responses]
             elif state == 'get_wav':
                 audio_responses.append(data_dump.replace(festival_key, b''))
             break
