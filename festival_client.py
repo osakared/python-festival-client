@@ -77,13 +77,13 @@ class FestivalClient(object):
 
         return True
 
-    def send_message(self, message):
+    def send_message(self, message, encoding='UTF-8'):
         """Sends a message to festival_server and returns a tuple of a list of scheme responses and a list of audio responses ([], [])"""
 
         if not self.socket: return
 
         # Send message
-        self.socket.sendall(bytes(message, 'ISO-8859-1'))
+        self.socket.sendall(bytes(message, encoding))
 
         # Always get response
         scheme_responses = []
@@ -110,7 +110,7 @@ class FestivalClient(object):
             if state == 'get_scheme':
                 current_scheme_responses = data_dump.split(newline_bytes)
                 current_scheme_responses.remove(festival_key)
-                scheme_responses += [response.decode('ISO-8859-1') for response in current_scheme_responses]
+                scheme_responses += [response.decode(encoding) for response in current_scheme_responses]
             elif state == 'get_wav':
                 audio_responses.append(data_dump.replace(festival_key, b''))
             break
